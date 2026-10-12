@@ -26,14 +26,32 @@ class Settings(BaseSettings):
         "sqlite:///./data/fastmanage.db"
     )
 
+   
     @field_validator("DATABASE_URL")
     @classmethod
     def normalizar_database_url(cls, valor: str) -> str:
+        if valor.startswith("postgres://"):
+            return valor.replace(
+                "postgres://",
+                "postgresql+psycopg://",
+                1
+            )
+
+        if valor.startswith("postgresql://"):
+            return valor.replace(
+                "postgresql://",
+                "postgresql+psycopg://",
+                1
+            )
+
+        if valor.startswith("postgresql+psycopg://"):
+            return valor
+
         prefijo = "sqlite:///"
 
         if not valor.startswith(prefijo):
             raise ValueError(
-                "FastManage requiere una base de datos SQLite"
+                "DATABASE_URL debe utilizar SQLite o PostgreSQL"
             )
 
         ruta = valor[len(prefijo):]
@@ -49,6 +67,7 @@ class Settings(BaseSettings):
         archivo = archivo.resolve()
 
         return f"sqlite:///{archivo.as_posix()}"
+
 
     # ==========================================
     # SEGURIDAD Y AUTENTICACIÓN
