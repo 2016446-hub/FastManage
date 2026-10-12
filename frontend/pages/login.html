@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FastManage | Iniciar sesión</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/auth.css">
+
+    <script src="/js/api.js" defer></script>
+    <script src="/js/auth.js" defer></script>
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="/" class="logo">
+            Fast<span>Manage</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="/registro.html">
+                Crear cuenta
+            </a>
+        </nav>
+    </header>
+
+    <main class="auth-page">
+        <section class="auth-card">
+            <div class="auth-heading">
+                <h1>Bienvenido de nuevo</h1>
+                <p>
+                    Inicia sesión para administrar
+                    tus restaurantes.
+                </p>
+            </div>
+
+            <form id="formLogin">
+                <div class="form-group">
+                    <label for="correo">
+                        Correo electrónico
+                    </label>
+
+                    <input
+                        type="email"
+                        id="correo"
+                        name="correo"
+                        placeholder="correo@ejemplo.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="clave">
+                        Contraseña
+                    </label>
+
+                    <input
+                        type="password"
+                        id="clave"
+                        name="clave"
+                        placeholder="Tu contraseña"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <div
+                    id="mensajeAuth"
+                    class="auth-message"
+                    role="status"
+                    aria-live="polite"
+                ></div>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-full"
+                >
+                    Iniciar sesión
+                </button>
+            </form>
+
+            <p class="auth-footer">
+                ¿Todavía no tienes cuenta?
+                <a href="/registro.html">
+                    Regístrate aquí
+                </a>
+            </p>
+        </section>
+    </main>
+
+</body>
+</html>

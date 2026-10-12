@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FastManage | Asignaciones</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/formularios.css">
+
+    <script src="/js/api.js" defer></script>
+    <script src="/js/asignaciones.js" defer></script>
+</head>
+
+<body class="dashboard-body">
+
+<div class="dashboard-layout">
+
+    <aside class="sidebar" id="sidebar">
+
+        <a href="/dashboard.html"
+           class="sidebar-logo">
+            Fast<span>Manage</span>
+        </a>
+
+        <nav class="sidebar-nav"
+             aria-label="Navegación principal">
+
+            <a href="/dashboard.html"
+               class="sidebar-link">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/restaurantes.html"
+               class="sidebar-link">
+                <span>🍽️</span> Restaurantes
+            </a>
+
+            <a href="/locales.html"
+               class="sidebar-link">
+                <span>🏬</span> Locales
+            </a>
+
+            <a href="/empleados.html"
+               class="sidebar-link">
+                <span>👥</span> Empleados
+            </a>
+
+            <a href="/asignaciones.html"
+               class="sidebar-link active"
+               aria-current="page">
+                <span>📋</span> Asignaciones
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button
+                id="btnCerrarSesion"
+                class="logout-button"
+                type="button">
+                Cerrar sesión
+            </button>
+        </div>
+
+    </aside>
+
+    <div class="dashboard-main">
+
+        <header class="dashboard-header">
+
+            <div class="header-left">
+
+                <button
+                    id="btnMenu"
+                    class="menu-button"
+                    type="button"
+                    aria-label="Abrir menú"
+                    aria-expanded="false"
+                    aria-controls="sidebar">
+                    ☰
+                </button>
+
+                <div>
+                    <h1>Asignaciones laborales</h1>
+                    <p>Gestión e historial del personal</p>
+                </div>
+
+            </div>
+
+            <div class="user-info">
+
+                <div class="user-avatar"
+                     id="avatarUsuario">
+                    U
+                </div>
+
+                <div class="user-details">
+                    <strong id="nombreUsuario">
+                        Cargando...
+                    </strong>
+                    <small id="correoUsuario"></small>
+                </div>
+
+            </div>
+
+        </header>
+
+        <main class="dashboard-content">
+
+            <section class="module-heading">
+
+                <div>
+                    <h2>Asignaciones de empleados</h2>
+                    <p>
+                        Controla las sucursales, turnos y
+                        períodos laborales de tu personal.
+                    </p>
+                </div>
+
+                <button
+                    id="btnNuevaAsignacion"
+                    class="btn btn-primary"
+                    type="button">
+                    + Nueva asignación
+                </button>
+
+            </section>
+
+            <div
+                id="mensajeAsignaciones"
+                class="module-message"
+                role="status"
+                aria-live="polite">
+            </div>
+
+            <!-- ESTADÍSTICAS -->
+            <section class="assignment-stats">
+
+                <article class="assignment-stat">
+                    <span>Total histórico</span>
+                    <strong id="totalAsignaciones">—</strong>
+                </article>
+
+                <article class="assignment-stat">
+                    <span>Vigentes</span>
+                    <strong id="asignacionesActivas">—</strong>
+                </article>
+
+                <article class="assignment-stat">
+                    <span>Finalizadas</span>
+                    <strong id="asignacionesFinalizadas">—</strong>
+                </article>
+
+            </section>
+
+            <!-- FILTROS -->
+            <section class="module-panel">
+
+                <div class="assignment-filters">
+
+                    <div class="filter-field">
+                        <label for="filtroRestaurante">
+                            Restaurante
+                        </label>
+
+                        <select id="filtroRestaurante">
+                            <option value="todos">
+                                Todos los restaurantes
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="filtroLocal">
+                            Local
+                        </label>
+
+                        <select id="filtroLocal">
+                            <option value="todos">
+                                Todos los locales
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="filtroEstado">
+                            Estado
+                        </label>
+
+                        <select id="filtroEstado">
+                            <option value="todos">
+                                Todas
+                            </option>
+                            <option value="activas">
+                                Vigentes
+                            </option>
+                            <option value="finalizadas">
+                                Finalizadas
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="buscarEmpleado">
+                            Buscar empleado
+                        </label>
+
+                        <input
+                            id="buscarEmpleado"
+                            type="search"
+                            placeholder="Nombre del empleado..."
+                        >
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- LISTADO -->
+            <section class="module-panel">
+
+                <div class="module-panel-heading">
+                    <h3>Historial de asignaciones</h3>
+                    <span id="contadorAsignaciones">
+                        0 asignaciones
+                    </span>
+                </div>
+
+                <div
+                    id="contenedorAsignaciones"
+                    class="entity-grid">
+                    <p>Cargando asignaciones...</p>
+                </div>
+
+            </section>
+
+            <!-- FORMULARIO -->
+            <section
+                id="panelFormulario"
+                class="module-panel form-panel"
+                hidden>
+
+                <div class="module-panel-heading">
+
+                    <h3 id="tituloFormulario">
+                        Nueva asignación
+                    </h3>
+
+                    <button
+                        id="btnCancelarFormulario"
+                        class="btn btn-outline"
+                        type="button">
+                        Cancelar
+                    </button>
+
+                </div>
+
+                <form id="formAsignacion">
+
+                    <input
+                        id="idAsignacion"
+                        type="hidden"
+                    >
+
+                    <div class="form-grid">
+
+                        <div class="form-field">
+                            <label for="idRestaurante">
+                                Restaurante *
+                            </label>
+
+                            <select
+                                id="idRestaurante"
+                                required>
+                                <option value="">
+                                    Selecciona un restaurante
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="idLocal">
+                                Local *
+                            </label>
+
+                            <select id="idLocal" required>
+                                <option value="">
+                                    Selecciona un local
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="idEmpleado">
+                                Empleado *
+                            </label>
+
+                            <select id="idEmpleado" required>
+                                <option value="">
+                                    Selecciona un empleado
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="fechaAsignacion">
+                                Fecha de asignación
+                            </label>
+
+                            <input
+                                id="fechaAsignacion"
+                                type="datetime-local"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="turno">
+                                Turno
+                            </label>
+
+                            <input
+                                id="turno"
+                                type="text"
+                                maxlength="100"
+                                placeholder="Ej. Mañana"
+                            >
+                        </div>
+
+                        <div class="form-field full-width">
+                            <label for="observaciones">
+                                Observaciones
+                            </label>
+
+                            <textarea
+                                id="observaciones"
+                                rows="4"
+                                placeholder="Información adicional de la asignación"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+                        <button
+                            id="btnGuardarAsignacion"
+                            class="btn btn-primary"
+                            type="submit">
+                            Guardar asignación
+                        </button>
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+</body>
+</html>

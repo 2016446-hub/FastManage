@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FastManage | Dashboard</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+
+    <script src="/js/api.js" defer></script>
+    <script src="/js/dashboard.js" defer></script>
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- BARRA LATERAL -->
+        <aside class="sidebar" id="sidebar">
+
+            <a href="/dashboard.html"
+               class="sidebar-logo">
+                Fast<span>Manage</span>
+            </a>
+
+            <nav class="sidebar-nav"
+                 aria-label="Navegación principal">
+
+                <a href="/dashboard.html"
+                   class="sidebar-link active"
+                   aria-current="page">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="/restaurantes.html"
+                   class="sidebar-link">
+                    <span>🍽️</span> Restaurantes
+                </a>
+
+                <a href="/locales.html"
+                   class="sidebar-link">
+                    <span>🏬</span> Locales
+                </a>
+
+                <a href="/empleados.html"
+                   class="sidebar-link">
+                    <span>👥</span> Empleados
+                </a>
+
+                <a href="/asignaciones.html"
+                   class="sidebar-link">
+                    <span>📋</span> Asignaciones
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+                <button
+                    id="btnCerrarSesion"
+                    class="logout-button"
+                    type="button">
+                    Cerrar sesión
+                </button>
+            </div>
+
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="dashboard-main">
+
+            <header class="dashboard-header">
+
+                <div class="header-left">
+                    <button
+                        id="btnMenu"
+                        class="menu-button"
+                        type="button"
+                        aria-label="Abrir menú"
+                        aria-expanded="false"
+                        aria-controls="sidebar">
+                        ☰
+                    </button>
+
+                    <div>
+                        <h1>Panel de administración</h1>
+                        <p>
+                            Resumen general de tu negocio
+                        </p>
+                    </div>
+                </div>
+
+                <div class="user-info">
+                    <div class="user-avatar"
+                         aria-hidden="true"
+                         id="avatarUsuario">
+                        U
+                    </div>
+
+                    <div class="user-details">
+                        <strong id="nombreUsuario">
+                            Cargando...
+                        </strong>
+                        <small id="correoUsuario"></small>
+                    </div>
+                </div>
+
+            </header>
+
+            <main class="dashboard-content">
+
+                <section class="welcome-section">
+                    <h2 id="saludoUsuario">
+                        Bienvenido a FastManage
+                    </h2>
+
+                    <p>
+                        Consulta el estado de tus
+                        restaurantes, locales y personal
+                        desde un solo lugar.
+                    </p>
+                </section>
+
+                <div
+                    id="mensajeDashboard"
+                    class="dashboard-message"
+                    role="status"
+                    aria-live="polite">
+                </div>
+
+                <!-- ESTADÍSTICAS -->
+                <section
+                    class="stats-grid"
+                    aria-label="Estadísticas generales">
+
+                    <article class="stat-card">
+                        <div class="stat-icon">🍽️</div>
+                        <p>Restaurantes</p>
+                        <h3 id="totalRestaurantes">—</h3>
+                        <span>Registrados</span>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-icon">🏬</div>
+                        <p>Locales</p>
+                        <h3 id="totalLocales">—</h3>
+                        <span>Activos</span>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <p>Empleados</p>
+                        <h3 id="totalEmpleados">—</h3>
+                        <span>Activos</span>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-icon">📋</div>
+                        <p>Asignaciones</p>
+                        <h3 id="totalAsignaciones">—</h3>
+                        <span>Vigentes</span>
+                    </article>
+
+                </section>
+
+                <!-- RESTAURANTES -->
+                <section class="dashboard-section">
+
+                    <div class="section-header">
+                        <div>
+                            <h2>Mis restaurantes</h2>
+                            <p>
+                                Establecimientos registrados
+                                en tu cuenta.
+                            </p>
+                        </div>
+
+                        <a href="/restaurantes.html"
+                           class="btn btn-primary">
+                            Administrar
+                        </a>
+                    </div>
+
+                    <div
+                        id="listaRestaurantes"
+                        class="restaurant-list">
+                        <p>Cargando restaurantes...</p>
+                    </div>
+
+                </section>
+
+                <!-- ACCESOS RÁPIDOS -->
+                <section class="dashboard-section">
+
+                    <div class="section-header">
+                        <div>
+                            <h2>Accesos rápidos</h2>
+                            <p>
+                                Gestiona las áreas
+                                principales del sistema.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+
+                        <a href="/restaurantes.html"
+                           class="quick-action">
+                            <span>🍽️</span>
+                            <strong>Restaurantes</strong>
+                            <small>
+                                Administrar establecimientos
+                            </small>
+                        </a>
+
+                        <a href="/locales.html"
+                           class="quick-action">
+                            <span>🏬</span>
+                            <strong>Locales</strong>
+                            <small>
+                                Gestionar sucursales
+                            </small>
+                        </a>
+
+                        <a href="/empleados.html"
+                           class="quick-action">
+                            <span>👥</span>
+                            <strong>Empleados</strong>
+                            <small>
+                                Administrar personal
+                            </small>
+                        </a>
+
+                        <a href="/asignaciones.html"
+                           class="quick-action">
+                            <span>📋</span>
+                            <strong>Asignaciones</strong>
+                            <small>
+                                Consultar historial laboral
+                            </small>
+                        </a>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

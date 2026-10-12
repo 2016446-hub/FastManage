@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FastManage | Locales</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/formularios.css">
+
+    <script src="/js/api.js" defer></script>
+    <script src="/js/locales.js" defer></script>
+</head>
+
+<body class="dashboard-body">
+
+<div class="dashboard-layout">
+
+    <!-- BARRA LATERAL -->
+    <aside class="sidebar" id="sidebar">
+
+        <a href="/dashboard.html"
+           class="sidebar-logo">
+            Fast<span>Manage</span>
+        </a>
+
+        <nav class="sidebar-nav"
+             aria-label="Navegación principal">
+
+            <a href="/dashboard.html"
+               class="sidebar-link">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/restaurantes.html"
+               class="sidebar-link">
+                <span>🍽️</span> Restaurantes
+            </a>
+
+            <a href="/locales.html"
+               class="sidebar-link active"
+               aria-current="page">
+                <span>🏬</span> Locales
+            </a>
+
+            <a href="/empleados.html"
+               class="sidebar-link">
+                <span>👥</span> Empleados
+            </a>
+
+            <a href="/asignaciones.html"
+               class="sidebar-link">
+                <span>📋</span> Asignaciones
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button
+                id="btnCerrarSesion"
+                class="logout-button"
+                type="button">
+                Cerrar sesión
+            </button>
+        </div>
+
+    </aside>
+
+    <!-- CONTENIDO -->
+    <div class="dashboard-main">
+
+        <header class="dashboard-header">
+
+            <div class="header-left">
+
+                <button
+                    id="btnMenu"
+                    class="menu-button"
+                    type="button"
+                    aria-label="Abrir menú"
+                    aria-controls="sidebar"
+                    aria-expanded="false">
+                    ☰
+                </button>
+
+                <div>
+                    <h1>Locales</h1>
+                    <p>Administración de sucursales</p>
+                </div>
+
+            </div>
+
+            <div class="user-info">
+
+                <div class="user-avatar"
+                     id="avatarUsuario">
+                    U
+                </div>
+
+                <div class="user-details">
+                    <strong id="nombreUsuario">
+                        Cargando...
+                    </strong>
+                    <small id="correoUsuario"></small>
+                </div>
+
+            </div>
+
+        </header>
+
+        <main class="dashboard-content">
+
+            <!-- ENCABEZADO -->
+            <section class="module-heading">
+
+                <div>
+                    <h2>Mis locales</h2>
+                    <p>
+                        Administra las sucursales
+                        de tus restaurantes.
+                    </p>
+                </div>
+
+                <button
+                    id="btnNuevoLocal"
+                    class="btn btn-primary"
+                    type="button">
+                    + Nuevo local
+                </button>
+
+            </section>
+
+            <div
+                id="mensajeLocales"
+                class="module-message"
+                role="status"
+                aria-live="polite">
+            </div>
+
+            <!-- FILTROS -->
+            <section class="module-panel">
+
+                <div class="filter-row">
+
+                    <div class="filter-field">
+                        <label for="buscarLocal">
+                            Buscar local
+                        </label>
+
+                        <input
+                            id="buscarLocal"
+                            type="search"
+                            placeholder="Nombre, provincia o cantón..."
+                        >
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="filtroRestaurante">
+                            Restaurante
+                        </label>
+
+                        <select id="filtroRestaurante">
+                            <option value="todos">
+                                Todos los restaurantes
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="filtroEstado">
+                            Estado
+                        </label>
+
+                        <select id="filtroEstado">
+                            <option value="todos">Todos</option>
+                            <option value="activos">Activos</option>
+                            <option value="inactivos">Inactivos</option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- LISTADO -->
+            <section class="module-panel">
+
+                <div class="module-panel-heading">
+                    <h3>Locales registrados</h3>
+                    <span id="contadorLocales">
+                        0 locales
+                    </span>
+                </div>
+
+                <div
+                    id="contenedorLocales"
+                    class="entity-grid">
+                    <p>Cargando locales...</p>
+                </div>
+
+            </section>
+
+            <!-- FORMULARIO -->
+            <section
+                class="module-panel form-panel"
+                id="panelFormulario"
+                hidden>
+
+                <div class="module-panel-heading">
+
+                    <h3 id="tituloFormulario">
+                        Nuevo local
+                    </h3>
+
+                    <button
+                        id="btnCancelarFormulario"
+                        class="btn btn-outline"
+                        type="button">
+                        Cancelar
+                    </button>
+
+                </div>
+
+                <form id="formLocal">
+
+                    <input
+                        type="hidden"
+                        id="idLocal"
+                    >
+
+                    <div class="form-grid">
+
+                        <div class="form-field">
+                            <label for="idRestaurante">
+                                Restaurante *
+                            </label>
+
+                            <select
+                                id="idRestaurante"
+                                required>
+                                <option value="">
+                                    Selecciona un restaurante
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="nombre">
+                                Nombre del local *
+                            </label>
+
+                            <input
+                                id="nombre"
+                                type="text"
+                                maxlength="150"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="provincia">
+                                Provincia *
+                            </label>
+
+                            <input
+                                id="provincia"
+                                type="text"
+                                maxlength="100"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="canton">
+                                Cantón *
+                            </label>
+
+                            <input
+                                id="canton"
+                                type="text"
+                                maxlength="100"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="distrito">
+                                Distrito *
+                            </label>
+
+                            <input
+                                id="distrito"
+                                type="text"
+                                maxlength="100"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="telefono">
+                                Teléfono
+                            </label>
+
+                            <input
+                                id="telefono"
+                                type="tel"
+                                maxlength="20"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="correoContacto">
+                                Correo de contacto
+                            </label>
+
+                            <input
+                                id="correoContacto"
+                                type="email"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="capacidadClientes">
+                                Capacidad de clientes
+                            </label>
+
+                            <input
+                                id="capacidadClientes"
+                                type="number"
+                                min="0"
+                                step="1"
+                                placeholder="Ej. 40"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="horarioApertura">
+                                Hora de apertura
+                            </label>
+
+                            <input
+                                id="horarioApertura"
+                                type="time"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="horarioCierre">
+                                Hora de cierre
+                            </label>
+
+                            <input
+                                id="horarioCierre"
+                                type="time"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="fechaApertura">
+                                Fecha de apertura
+                            </label>
+
+                            <input
+                                id="fechaApertura"
+                                type="date"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="imagenUrl">
+                                URL de la imagen
+                            </label>
+
+                            <input
+                                id="imagenUrl"
+                                type="url"
+                                placeholder="https://ejemplo.com/local.jpg"
+                            >
+                        </div>
+
+                        <div class="form-field full-width">
+                            <label for="direccion">
+                                Dirección exacta *
+                            </label>
+
+                            <textarea
+                                id="direccion"
+                                rows="3"
+                                required></textarea>
+                        </div>
+
+                        <div class="form-field full-width">
+                            <label for="descripcion">
+                                Descripción
+                            </label>
+
+                            <textarea
+                                id="descripcion"
+                                rows="4"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+                        <button
+                            id="btnGuardarLocal"
+                            class="btn btn-primary"
+                            type="submit">
+                            Guardar local
+                        </button>
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+</body>
+</html>

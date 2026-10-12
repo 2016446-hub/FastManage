@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FastManage | Empleados</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/formularios.css">
+
+    <script src="/js/api.js" defer></script>
+    <script src="/js/empleados.js" defer></script>
+</head>
+
+<body class="dashboard-body">
+
+<div class="dashboard-layout">
+
+    <!-- BARRA LATERAL -->
+    <aside class="sidebar" id="sidebar">
+
+        <a href="/dashboard.html"
+           class="sidebar-logo">
+            Fast<span>Manage</span>
+        </a>
+
+        <nav class="sidebar-nav"
+             aria-label="Navegación principal">
+
+            <a href="/dashboard.html"
+               class="sidebar-link">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/restaurantes.html"
+               class="sidebar-link">
+                <span>🍽️</span> Restaurantes
+            </a>
+
+            <a href="/locales.html"
+               class="sidebar-link">
+                <span>🏬</span> Locales
+            </a>
+
+            <a href="/empleados.html"
+               class="sidebar-link active"
+               aria-current="page">
+                <span>👥</span> Empleados
+            </a>
+
+            <a href="/asignaciones.html"
+               class="sidebar-link">
+                <span>📋</span> Asignaciones
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button
+                id="btnCerrarSesion"
+                class="logout-button"
+                type="button">
+                Cerrar sesión
+            </button>
+        </div>
+
+    </aside>
+
+    <!-- CONTENIDO -->
+    <div class="dashboard-main">
+
+        <header class="dashboard-header">
+
+            <div class="header-left">
+                <button
+                    id="btnMenu"
+                    class="menu-button"
+                    type="button"
+                    aria-label="Abrir menú"
+                    aria-controls="sidebar"
+                    aria-expanded="false">
+                    ☰
+                </button>
+
+                <div>
+                    <h1>Empleados</h1>
+                    <p>Administración del personal</p>
+                </div>
+            </div>
+
+            <div class="user-info">
+                <div class="user-avatar"
+                     id="avatarUsuario">
+                    U
+                </div>
+
+                <div class="user-details">
+                    <strong id="nombreUsuario">
+                        Cargando...
+                    </strong>
+                    <small id="correoUsuario"></small>
+                </div>
+            </div>
+
+        </header>
+
+        <main class="dashboard-content">
+
+            <!-- ENCABEZADO -->
+            <section class="module-heading">
+                <div>
+                    <h2>Mis empleados</h2>
+                    <p>
+                        Registra y administra el personal
+                        de tus restaurantes.
+                    </p>
+                </div>
+
+                <button
+                    id="btnNuevoEmpleado"
+                    class="btn btn-primary"
+                    type="button">
+                    + Nuevo empleado
+                </button>
+            </section>
+
+            <div
+                id="mensajeEmpleados"
+                class="module-message"
+                role="status"
+                aria-live="polite">
+            </div>
+
+            <!-- FILTROS -->
+            <section class="module-panel">
+
+                <div class="employee-filters">
+
+                    <div class="filter-field">
+                        <label for="buscarEmpleado">
+                            Buscar empleado
+                        </label>
+                        <input
+                            id="buscarEmpleado"
+                            type="search"
+                            placeholder="Nombre o identificación..."
+                        >
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="filtroRestaurante">
+                            Restaurante
+                        </label>
+                        <select id="filtroRestaurante">
+                            <option value="todos">
+                                Todos los restaurantes
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="filtroPuesto">
+                            Puesto
+                        </label>
+                        <select id="filtroPuesto">
+                            <option value="todos">
+                                Todos los puestos
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="filtroEstado">
+                            Estado
+                        </label>
+                        <select id="filtroEstado">
+                            <option value="todos">Todos</option>
+                            <option value="activos">Activos</option>
+                            <option value="inactivos">Inactivos</option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- LISTADO -->
+            <section class="module-panel">
+
+                <div class="module-panel-heading">
+                    <h3>Personal registrado</h3>
+                    <span id="contadorEmpleados">
+                        0 empleados
+                    </span>
+                </div>
+
+                <div
+                    id="contenedorEmpleados"
+                    class="entity-grid">
+                    <p>Cargando empleados...</p>
+                </div>
+
+            </section>
+
+            <!-- FORMULARIO -->
+            <section
+                class="module-panel form-panel"
+                id="panelFormulario"
+                hidden>
+
+                <div class="module-panel-heading">
+                    <h3 id="tituloFormulario">
+                        Nuevo empleado
+                    </h3>
+
+                    <button
+                        id="btnCancelarFormulario"
+                        class="btn btn-outline"
+                        type="button">
+                        Cancelar
+                    </button>
+                </div>
+
+                <form id="formEmpleado">
+
+                    <input type="hidden" id="idEmpleado">
+
+                    <div class="form-grid">
+
+                        <div class="form-field">
+                            <label for="idRestaurante">
+                                Restaurante *
+                            </label>
+                            <select id="idRestaurante" required>
+                                <option value="">
+                                    Selecciona un restaurante
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="identificacion">
+                                Identificación *
+                            </label>
+                            <input
+                                id="identificacion"
+                                type="text"
+                                maxlength="30"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="nombre">
+                                Nombre *
+                            </label>
+                            <input
+                                id="nombre"
+                                type="text"
+                                maxlength="100"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="primerApellido">
+                                Primer apellido *
+                            </label>
+                            <input
+                                id="primerApellido"
+                                type="text"
+                                maxlength="100"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="segundoApellido">
+                                Segundo apellido
+                            </label>
+                            <input
+                                id="segundoApellido"
+                                type="text"
+                                maxlength="100"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="fechaNacimiento">
+                                Fecha de nacimiento
+                            </label>
+                            <input
+                                id="fechaNacimiento"
+                                type="date"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="correo">
+                                Correo electrónico
+                            </label>
+                            <input
+                                id="correo"
+                                type="email"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="telefono">
+                                Teléfono
+                            </label>
+                            <input
+                                id="telefono"
+                                type="tel"
+                                maxlength="20"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="puesto">
+                                Puesto *
+                            </label>
+                            <input
+                                id="puesto"
+                                type="text"
+                                maxlength="100"
+                                placeholder="Ej. Cocinero"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="tipoContrato">
+                                Tipo de contrato
+                            </label>
+                            <input
+                                id="tipoContrato"
+                                type="text"
+                                maxlength="100"
+                                placeholder="Ej. Tiempo completo"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="fechaContratacion">
+                                Fecha de contratación *
+                            </label>
+                            <input
+                                id="fechaContratacion"
+                                type="date"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="salario">
+                                Salario mensual (₡)
+                            </label>
+                            <input
+                                id="salario"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                placeholder="Ej. 450000"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="contactoEmergencia">
+                                Contacto de emergencia
+                            </label>
+                            <input
+                                id="contactoEmergencia"
+                                type="text"
+                                maxlength="150"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="telefonoEmergencia">
+                                Teléfono de emergencia
+                            </label>
+                            <input
+                                id="telefonoEmergencia"
+                                type="tel"
+                                maxlength="20"
+                            >
+                        </div>
+
+                        <div class="form-field full-width">
+                            <label for="direccion">
+                                Dirección
+                            </label>
+                            <textarea
+                                id="direccion"
+                                rows="3"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+                        <button
+                            id="btnGuardarEmpleado"
+                            class="btn btn-primary"
+                            type="submit">
+                            Guardar empleado
+                        </button>
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+</body>
+</html>

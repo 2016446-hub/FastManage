@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FastManage | Registro</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/auth.css">
+
+    <script src="/js/api.js" defer></script>
+    <script src="/js/auth.js" defer></script>
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="/" class="logo">
+            Fast<span>Manage</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="/login.html">
+                Iniciar sesión
+            </a>
+        </nav>
+    </header>
+
+    <main class="auth-page">
+        <section class="auth-card">
+            <div class="auth-heading">
+                <h1>Crea tu cuenta</h1>
+                <p>
+                    Comienza a gestionar tus restaurantes
+                    con FastManage.
+                </p>
+            </div>
+
+            <form id="formRegistro">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            maxlength="100"
+                            autocomplete="given-name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="primerApellido">
+                            Primer apellido
+                        </label>
+                        <input
+                            type="text"
+                            id="primerApellido"
+                            name="primer_apellido"
+                            maxlength="100"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="segundoApellido">
+                        Segundo apellido (opcional)
+                    </label>
+                    <input
+                        type="text"
+                        id="segundoApellido"
+                        name="segundo_apellido"
+                        maxlength="100"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="correo">
+                        Correo electrónico
+                    </label>
+                    <input
+                        type="email"
+                        id="correo"
+                        name="correo"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono">
+                        Teléfono (opcional)
+                    </label>
+                    <input
+                        type="tel"
+                        id="telefono"
+                        name="telefono"
+                        maxlength="20"
+                        autocomplete="tel"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaNacimiento">
+                        Fecha de nacimiento (opcional)
+                    </label>
+                    <input
+                        type="date"
+                        id="fechaNacimiento"
+                        name="fecha_nacimiento"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="clave">
+                        Contraseña
+                    </label>
+                    <input
+                        type="password"
+                        id="clave"
+                        name="clave"
+                        minlength="8"
+                        maxlength="128"
+                        autocomplete="new-password"
+                        required
+                    >
+                    <small>
+                        Utiliza al menos 8 caracteres.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmarClave">
+                        Confirmar contraseña
+                    </label>
+                    <input
+                        type="password"
+                        id="confirmarClave"
+                        name="confirmar_clave"
+                        minlength="8"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <div
+                    id="mensajeAuth"
+                    class="auth-message"
+                    role="status"
+                    aria-live="polite"
+                ></div>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-full"
+                >
+                    Crear cuenta
+                </button>
+            </form>
+
+            <p class="auth-footer">
+                ¿Ya tienes una cuenta?
+                <a href="/login.html">
+                    Inicia sesión
+                </a>
+            </p>
+        </section>
+    </main>
+
+</body>
+</html>

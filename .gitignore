@@ -1,0 +1,68 @@
+```gitignore
+# ==========================================
+# FASTMANAGE - ARCHIVO .gitignore
+# ==========================================
+
+# ENTORNOS VIRTUALES DE PYTHON
+.venv/
+venv/
+env/
+ENV/
+
+# VARIABLES DE ENTORNO Y CONFIGURACIÓN PRIVADA
+.env
+.env.*
+!.env.example
+
+# ARCHIVOS TEMPORALES DE PYTHON
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# ARCHIVOS DE COMPILACIÓN
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# BASE DE DATOS SQLITE
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# ARCHIVOS TEMPORALES Y CACHÉ
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.log
+*.tmp
+*.bak
+
+# CONFIGURACIONES DE EDITORES
+.vscode/
+.idea/
+*.code-workspace
+
+# ARCHIVOS DEL SISTEMA OPERATIVO
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ARCHIVOS TEMPORALES DEL FRONTEND
+*.map
+
+# ARCHIVOS DE PRUEBAS
+.tox/
+.nox/
+
+# ARCHIVOS LOCALES DE DESARROLLO
+local_settings.py
+settings.local.py
+```

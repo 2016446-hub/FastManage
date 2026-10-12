@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FastManage | Restaurantes</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/formularios.css">
+
+    <script src="/js/api.js" defer></script>
+    <script src="/js/restaurantes.js" defer></script>
+</head>
+
+<body class="dashboard-body">
+
+<div class="dashboard-layout">
+
+    <!-- BARRA LATERAL -->
+    <aside class="sidebar" id="sidebar">
+
+        <a href="/dashboard.html"
+           class="sidebar-logo">
+            Fast<span>Manage</span>
+        </a>
+
+        <nav class="sidebar-nav"
+             aria-label="Navegación principal">
+
+            <a href="/dashboard.html"
+               class="sidebar-link">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="/restaurantes.html"
+               class="sidebar-link active"
+               aria-current="page">
+                <span>🍽️</span> Restaurantes
+            </a>
+
+            <a href="/locales.html"
+               class="sidebar-link">
+                <span>🏬</span> Locales
+            </a>
+
+            <a href="/empleados.html"
+               class="sidebar-link">
+                <span>👥</span> Empleados
+            </a>
+
+            <a href="/asignaciones.html"
+               class="sidebar-link">
+                <span>📋</span> Asignaciones
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button
+                id="btnCerrarSesion"
+                class="logout-button"
+                type="button">
+                Cerrar sesión
+            </button>
+        </div>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <div class="dashboard-main">
+
+        <header class="dashboard-header">
+
+            <div class="header-left">
+
+                <button
+                    id="btnMenu"
+                    class="menu-button"
+                    type="button"
+                    aria-label="Abrir menú"
+                    aria-controls="sidebar"
+                    aria-expanded="false">
+                    ☰
+                </button>
+
+                <div>
+                    <h1>Restaurantes</h1>
+                    <p>
+                        Administración de establecimientos
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="user-info">
+                <div class="user-avatar"
+                     id="avatarUsuario">
+                    U
+                </div>
+
+                <div class="user-details">
+                    <strong id="nombreUsuario">
+                        Cargando...
+                    </strong>
+                    <small id="correoUsuario"></small>
+                </div>
+            </div>
+
+        </header>
+
+        <main class="dashboard-content">
+
+            <section class="module-heading">
+
+                <div>
+                    <h2>Mis restaurantes</h2>
+                    <p>
+                        Registra y administra los restaurantes
+                        asociados a tu cuenta.
+                    </p>
+                </div>
+
+                <button
+                    id="btnNuevoRestaurante"
+                    class="btn btn-primary"
+                    type="button">
+                    + Nuevo restaurante
+                </button>
+
+            </section>
+
+            <div
+                id="mensajeRestaurantes"
+                class="module-message"
+                role="status"
+                aria-live="polite">
+            </div>
+
+            <!-- FILTROS -->
+            <section class="module-panel">
+
+                <div class="filter-row">
+
+                    <div class="filter-field">
+                        <label for="buscarRestaurante">
+                            Buscar restaurante
+                        </label>
+
+                        <input
+                            type="search"
+                            id="buscarRestaurante"
+                            placeholder="Buscar por nombre..."
+                        >
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="filtroEstado">
+                            Estado
+                        </label>
+
+                        <select id="filtroEstado">
+                            <option value="todos">
+                                Todos
+                            </option>
+                            <option value="activos">
+                                Activos
+                            </option>
+                            <option value="inactivos">
+                                Inactivos
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- LISTADO -->
+            <section class="module-panel">
+
+                <div class="module-panel-heading">
+                    <h3>Restaurantes registrados</h3>
+                    <span id="contadorRestaurantes">
+                        0 restaurantes
+                    </span>
+                </div>
+
+                <div
+                    id="contenedorRestaurantes"
+                    class="entity-grid">
+                    <p>Cargando restaurantes...</p>
+                </div>
+
+            </section>
+
+            <!-- FORMULARIO -->
+            <section
+                class="module-panel form-panel"
+                id="panelFormulario"
+                hidden>
+
+                <div class="module-panel-heading">
+                    <h3 id="tituloFormulario">
+                        Nuevo restaurante
+                    </h3>
+
+                    <button
+                        id="btnCancelarFormulario"
+                        type="button"
+                        class="btn btn-outline">
+                        Cancelar
+                    </button>
+                </div>
+
+                <form id="formRestaurante">
+
+                    <input
+                        type="hidden"
+                        id="idRestaurante"
+                    >
+
+                    <div class="form-grid">
+
+                        <div class="form-field">
+                            <label for="nombre">
+                                Nombre *
+                            </label>
+                            <input
+                                id="nombre"
+                                type="text"
+                                maxlength="150"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="tipoComida">
+                                Tipo de comida
+                            </label>
+                            <input
+                                id="tipoComida"
+                                type="text"
+                                maxlength="100"
+                                placeholder="Ej. Comida rápida"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="cedulaJuridica">
+                                Cédula jurídica
+                            </label>
+                            <input
+                                id="cedulaJuridica"
+                                type="text"
+                                maxlength="30"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="telefono">
+                                Teléfono
+                            </label>
+                            <input
+                                id="telefono"
+                                type="tel"
+                                maxlength="20"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="correoContacto">
+                                Correo de contacto
+                            </label>
+                            <input
+                                id="correoContacto"
+                                type="email"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="sitioWeb">
+                                Sitio web
+                            </label>
+                            <input
+                                id="sitioWeb"
+                                type="url"
+                                placeholder="https://ejemplo.com"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="logoUrl">
+                                URL del logotipo
+                            </label>
+                            <input
+                                id="logoUrl"
+                                type="url"
+                                placeholder="https://ejemplo.com/logo.png"
+                            >
+                        </div>
+
+                        <div class="form-field">
+                            <label for="fechaFundacion">
+                                Fecha de fundación
+                            </label>
+                            <input
+                                id="fechaFundacion"
+                                type="date"
+                            >
+                        </div>
+
+                        <div class="form-field full-width">
+                            <label for="descripcion">
+                                Descripción
+                            </label>
+                            <textarea
+                                id="descripcion"
+                                rows="4"
+                                maxlength="1000">
+                            </textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+                        <button
+                            type="submit"
+                            id="btnGuardarRestaurante"
+                            class="btn btn-primary">
+                            Guardar restaurante
+                        </button>
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+</body>
+</html>
